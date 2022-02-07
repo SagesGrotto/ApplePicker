@@ -5,18 +5,25 @@
 * Last Edited by: NA
 * Last Edited: Feb 4, 2022
 * 
-* Description: 
+* Description: Basket controls and scoring
 ****/
 
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI; // using UI library
 
 public class Basket : MonoBehaviour
 {
+    [Header("Set Dynamically")]
+    public Text scoreGT;
+
     // Start is called before the first frame update
     void Start()
     {
+        GameObject scoreGO = GameObject.Find("ScoreCounter");
+        scoreGT = scoreGO.GetComponent<Text>();
+        scoreGT.text = "0";
 
     }
 
@@ -37,6 +44,15 @@ public class Basket : MonoBehaviour
         if (collidedWith.tag == "Apple")
         {
             Destroy(collidedWith);
+
+            int score = int.Parse(scoreGT.text);
+            score += 100;
+            scoreGT.text = score.ToString();
+
+            if(score > HighScore.score)
+            {
+                HighScore.score = score;
+            }
         }
     }
 }
